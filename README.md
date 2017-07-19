@@ -1,1 +1,1 @@
-# slipstream-auto-scale-apps
+# uva-auto-scale-apps
