@@ -33,7 +33,7 @@ mkdir /scratch/condor
 /root/$condor_name/condor_install --prefix=/root/condor --local-dir=/scratch/condor --type=manager,submit
 rm -rf /root/$condor_name
 cat /root/condor/condor.sh >> /root/.bashrc
-
+source /root/.bashrc
 /root/condor/sbin/condor_master
 /root/condor/sbin/condor_collector
 /root/condor/sbin/condor_negotiator
