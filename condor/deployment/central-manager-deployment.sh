@@ -24,9 +24,9 @@ apt-get update -y
 apt-get install -y gcc-multilib
 useradd -M -N -r -s /bin/false condor
 condor_name=condor-8.6.4-x86_64_Ubuntu14-stripped
-wget -O $condor_name.tar.gz https://github.com/ilyushkin/uva-auto-scale-apps/blob/master/condor/app/$condor_name.tar.gz?raw=true
-tar xzf $condor_name.tar.gz
-rm -f $condor_name.tar.gz
+wget -O /root/$condor_name.tar.gz https://github.com/ilyushkin/uva-auto-scale-apps/blob/master/condor/app/$condor_name.tar.gz?raw=true
+tar xzf /root/$condor_name.tar.gz
+rm -f /root/$condor_name.tar.gz
 mkdir /root/condor
 mkdir /scratch
 mkdir /scratch/condor
