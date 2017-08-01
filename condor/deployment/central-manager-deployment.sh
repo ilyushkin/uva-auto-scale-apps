@@ -15,6 +15,7 @@ apt-get install -y python
 }
 
 deploy_condor_ubuntu() {
+hostnamectl set-hostname $HOSTNAME.local
 export DEBIAN_FRONTEND=noninteractive
 apt-get update -q
 apt-get install -q -y -o Dpkg::Options::="--force-confdef" -o Dpkg::Options::="--force-confold" htcondor
