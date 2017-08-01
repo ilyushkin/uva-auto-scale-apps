@@ -18,37 +18,20 @@ deploy_condor_ubuntu() {
 export DEBIAN_FRONTEND=noninteractive
 apt-get update -q
 apt-get install -q -y -o Dpkg::Options::="--force-confdef" -o Dpkg::Options::="--force-confold" htcondor
-
-#hostnamectl set-hostname $HOSTNAME.htcondor
-#apt-get update -y
-#apt-get install -y gcc-multilib
-#useradd -M -N -r -s /bin/false condor
-#condor_name=condor-8.6.4-x86_64_Ubuntu14-stripped
-#wget -O /root/$condor_name.tar.gz https://github.com/ilyushkin/uva-auto-scale-apps/blob/master/condor/app/$condor_name.tar.gz?raw=true
-#tar xzf /root/$condor_name.tar.gz -C /root
-#rm -f /root/$condor_name.tar.gz
-#mkdir /root/condor
-#mkdir /scratch
-#mkdir /scratch/condor
-#/root/$condor_name/condor_install --prefix=/root/condor --local-dir=/scratch/condor --type=manager,submit
-#rm -rf /root/$condor_name
-#cat /root/condor/condor.sh >> /root/.bashrc
-#exec bash
-#ln -s /root/condor/etc/init.d/condor /etc/init.d/condor
-#
-#/root/condor/sbin/condor_master &
-#/root/condor/sbin/condor_collector &
-#/root/condor/sbin/condor_negotiator &
-#/root/condor/sbin/condor_schedd &
 }
 
-#gh=https://raw.githubusercontent.com
-#curl -sSfL $gh/ilyushkin/uva-auto-scale-apps/master/hist-as/deployment/central-manager-deployment.sh | bash
+deploy_pegasus() {
+wget -O - http://download.pegasus.isi.edu/pegasus/gpg.txt | sudo apt-key add -
+echo 'deb [arch=amd64] http://download.pegasus.isi.edu/pegasus/ubuntu trusty main' | sudo tee /etc/apt/sources.list.d/pegasus.list
+apt-get update -q
+apt-get install pegasus -y
+}
 
 #apt-get install software-properties-common
 deploy_java_ubuntu
 deploy_python_ubuntu
 deploy_condor_ubuntu
+deploy_pegasus
 
 exit 0
 
