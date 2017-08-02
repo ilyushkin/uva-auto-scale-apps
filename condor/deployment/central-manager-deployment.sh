@@ -31,15 +31,19 @@ apt-get install -y python
 }
 
 deploy_condor_ubuntu() {
-var="127.0.0.1 localhost localhost.localdomain $HOSTNAME.local"
+cm_hostname=$HOSTNAME.local
+var="127.0.0.1 localhost localhost.localdomain $cm_hostname"
 sed -i "1s/.*/$var/" /etc/hosts
-hostnamectl set-hostname $HOSTNAME.local
+hostnamectl set-hostname $cm_hostname
 export DEBIAN_FRONTEND=noninteractive
 apt-get update -q
 apt-get install -q -y -o Dpkg::Options::="--force-confdef" -o Dpkg::Options::="--force-confold" htcondor
 echo "COLLECTOR_HOST = \$(HOSTNAME)" >> /etc/condor/condor_config.local
 echo "DAEMON_LIST = MASTER, COLLECTOR, NEGOTIATOR, SCHEDD" >> /etc/condor/condor_config.local
-service condor restart
+ss-set cm.hostname $cm_hostname
+eth0_ip=`/sbin/ifconfig eth0 | grep 'inet addr:' | cut -d: -f2 | awk '{ print $1}'`
+ss-set cm.ip $eth0_ip
+condor_restart -all
 }
 
 deploy_pegasus() {
@@ -57,6 +61,9 @@ deploy_java_ubuntu
 deploy_python_ubuntu
 deploy_condor_ubuntu
 deploy_pegasus
+
+ss-display "Pegasus and HTCondor Central Manager are ready!"
+ss-set cm.ready true
 
 exit 0
 

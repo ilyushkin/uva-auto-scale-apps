@@ -31,33 +31,25 @@ apt-get install -y python
 }
 
 deploy_condor_ubuntu() {
-var="127.0.0.1 localhost localhost.localdomain $HOSTNAME.local"
+ss-get --timeout 600 cm.ready
+cm_hostname='ss-get cm.hostname'
+cm_ip='ss-get cm.ip'
+local_hostname=$HOSTNAME.local
+var="127.0.0.1 localhost localhost.localdomain $local_hostname"
 sed -i "1s/.*/$var/" /etc/hosts
-hostnamectl set-hostname $HOSTNAME.local
+"$cm_ip $cm_hostname" >> /etc/hosts
+hostnamectl set-hostname $local_hostname
 export DEBIAN_FRONTEND=noninteractive
 apt-get update -q
 apt-get install -q -y -o Dpkg::Options::="--force-confdef" -o Dpkg::Options::="--force-confold" htcondor
-collector_host='ss-get cmhostname'
-echo "COLLECTOR_HOST = $collector_host" >> /etc/condor/condor_config.local
+echo "COLLECTOR_HOST = $cm_hostname" >> /etc/condor/condor_config.local
 echo "DAEMON_LIST = MASTER, STARTD" >> /etc/condor/condor_config.local
-service condor restart
+condor_restart -all
 }
 
-deploy_pegasus() {
-wget -O - http://download.pegasus.isi.edu/pegasus/gpg.txt | sudo apt-key add -
-echo 'deb [arch=amd64] http://download.pegasus.isi.edu/pegasus/ubuntu trusty main' | sudo tee /etc/apt/sources.list.d/pegasus.list
-apt-get update -q
-apt-get install pegasus -y
-export PYTHONPATH=`pegasus-config --python`
-export PERL5LIB=`pegasus-config --perl`
-export CLASSPATH=`pegasus-config --classpath`
-}
-
-#apt-get install software-properties-common
 deploy_java_ubuntu
 deploy_python_ubuntu
 deploy_condor_ubuntu
-#deploy_pegasus
 
 exit 0
 
