@@ -31,12 +31,14 @@ apt-get install -y python
 }
 
 deploy_condor_ubuntu() {
-hostnamectl set-hostname $HOSTNAME.local
-var="127.0.0.1 localhost localhost.localdomain $HOSTNAME"
+var="127.0.0.1 localhost localhost.localdomain $HOSTNAME.local"
 sed -i "1s/.*/$var/" /etc/hosts
+hostnamectl set-hostname $HOSTNAME.local
 export DEBIAN_FRONTEND=noninteractive
 apt-get update -q
 apt-get install -q -y -o Dpkg::Options::="--force-confdef" -o Dpkg::Options::="--force-confold" htcondor
+echo "COLLECTOR_HOST = $(HOSTNAME)" > /etc/condor/condor_config
+condor_restart
 
 # modify the config here /etc/condor/condor_config
 # DAEMON_LIST = COLLECTOR, MASTER, NEGOTIATOR, SCHEDD, STARTD
