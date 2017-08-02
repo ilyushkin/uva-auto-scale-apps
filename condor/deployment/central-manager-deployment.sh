@@ -37,7 +37,7 @@ hostnamectl set-hostname $HOSTNAME.local
 export DEBIAN_FRONTEND=noninteractive
 apt-get update -q
 apt-get install -q -y -o Dpkg::Options::="--force-confdef" -o Dpkg::Options::="--force-confold" htcondor
-echo "COLLECTOR_HOST = $(HOSTNAME)" > /etc/condor/condor_config
+echo "COLLECTOR_HOST = \$(HOSTNAME)" >> /etc/condor/condor_config
 condor_restart
 
 # modify the config here /etc/condor/condor_config
