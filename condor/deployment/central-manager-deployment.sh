@@ -43,7 +43,9 @@ echo "DAEMON_LIST = MASTER, COLLECTOR, NEGOTIATOR, SCHEDD" >> /etc/condor/condor
 ss-set cm.hostname $cm_hostname
 eth0_ip=`/sbin/ifconfig eth0 | grep 'inet addr:' | cut -d: -f2 | awk '{ print $1}'`
 ss-set cm.ip $eth0_ip
-#condor_restart -all
+service condor restart
+ss-display "HTCondor Central Manager is ready"
+ss-set cm.ready true
 }
 
 deploy_pegasus() {
@@ -54,6 +56,7 @@ apt-get install pegasus -y
 export PYTHONPATH=`pegasus-config --python`
 export PERL5LIB=`pegasus-config --perl`
 export CLASSPATH=`pegasus-config --classpath`
+ss-display "Pegasus is ready"
 }
 
 #apt-get install software-properties-common
@@ -62,9 +65,4 @@ deploy_python_ubuntu
 deploy_condor_ubuntu
 deploy_pegasus
 
-ss-display "Pegasus and HTCondor Central Manager are ready!"
-ss-set cm.ready "true"
-
 exit 0
-
-
