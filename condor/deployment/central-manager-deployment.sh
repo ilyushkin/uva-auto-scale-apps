@@ -43,7 +43,7 @@ echo "DAEMON_LIST = MASTER, COLLECTOR, NEGOTIATOR, SCHEDD" >> /etc/condor/condor
 ss-set cm.hostname $cm_hostname
 eth0_ip=`/sbin/ifconfig eth0 | grep 'inet addr:' | cut -d: -f2 | awk '{ print $1}'`
 ss-set cm.ip $eth0_ip
-condor_restart -all
+#condor_restart -all
 }
 
 deploy_pegasus() {
