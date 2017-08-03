@@ -62,4 +62,7 @@ deploy_python_ubuntu
 deploy_condor_ubuntu
 deploy_pegasus
 
-ss-set cm.ready true
+#ss-set cm.ready true
+
+#exit 0
+
