@@ -62,9 +62,4 @@ deploy_python_ubuntu
 deploy_condor_ubuntu
 deploy_pegasus
 
-ss-display "Pegasus and HTCondor Central Manager are ready!"
 ss-set cm.ready true
-
-exit 0
-
-
