@@ -40,9 +40,9 @@ apt-get update -q
 apt-get install -q -y -o Dpkg::Options::="--force-confdef" -o Dpkg::Options::="--force-confold" htcondor
 echo "COLLECTOR_HOST = \$(HOSTNAME)" >> /etc/condor/condor_config.local
 echo "DAEMON_LIST = MASTER, COLLECTOR, NEGOTIATOR, SCHEDD" >> /etc/condor/condor_config.local
-ss-set ss:cm.hostname $cm_hostname
+ss-set cm.hostname $cm_hostname
 eth0_ip=`/sbin/ifconfig eth0 | grep 'inet addr:' | cut -d: -f2 | awk '{ print $1}'`
-ss-set ss:cm.ip $eth0_ip
+ss-set cm.ip $eth0_ip
 condor_restart -all
 }
 
@@ -63,7 +63,7 @@ deploy_condor_ubuntu
 deploy_pegasus
 
 ss-display "Pegasus and HTCondor Central Manager are ready!"
-ss-set ss:cm.ready true
+ss-set cm.ready true
 
 exit 0
 
