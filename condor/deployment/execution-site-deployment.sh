@@ -33,8 +33,8 @@ apt-get install -y python
 deploy_condor_ubuntu() {
 ss-get --timeout 600 cm.ready
 ss-display "Received the ready state of the HTCondor Central Manager"
-cm_hostname='ss-get cm.hostname'
-cm_ip='ss-get cm.ip'
+cm_hostname=`ss-get cm.hostname`
+cm_ip=`ss-get cm.ip`
 local_hostname=$HOSTNAME.local
 var="127.0.0.1 localhost localhost.localdomain $local_hostname"
 sed -i "1s/.*/$var/" /etc/hosts
