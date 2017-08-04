@@ -38,7 +38,7 @@ cm_ip=`ss-get cm.ip`
 local_hostname=$HOSTNAME.local
 var="127.0.0.1 localhost localhost.localdomain $local_hostname"
 sed -i "1s/.*/$var/" /etc/hosts
-"$cm_ip $cm_hostname" >> /etc/hosts
+echo "$cm_ip $cm_hostname" >> /etc/hosts
 hostnamectl set-hostname $local_hostname
 export DEBIAN_FRONTEND=noninteractive
 apt-get update -q
