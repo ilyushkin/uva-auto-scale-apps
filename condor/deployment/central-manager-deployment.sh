@@ -31,7 +31,7 @@ apt-get install -y python
 }
 
 deploy_condor_ubuntu() {
-cm_hostname=$HOSTNAME.local
+cm_hostname=$HOSTNAME
 var="127.0.0.1 localhost localhost.localdomain $cm_hostname"
 sed -i "1s/.*/$var/" /etc/hosts
 hostnamectl set-hostname $cm_hostname
@@ -64,5 +64,7 @@ deploy_java_ubuntu
 deploy_python_ubuntu
 deploy_condor_ubuntu
 #deploy_pegasus
+
+# When VM is added, add its address into /etc/hosts
 
 exit 0
