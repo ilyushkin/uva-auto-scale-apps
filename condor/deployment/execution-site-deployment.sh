@@ -44,6 +44,7 @@ export DEBIAN_FRONTEND=noninteractive
 apt-get update -q
 apt-get install -q -y -o Dpkg::Options::="--force-confdef" -o Dpkg::Options::="--force-confold" htcondor
 echo "CONDOR_HOST = $cm_hostname" >> /etc/condor/condor_config.local
+echo "COLLECTOR_HOST = \$(CONDOR_HOST)" >> /etc/condor/condor_config.local
 echo "DAEMON_LIST = MASTER, STARTD" >> /etc/condor/condor_config.local
 service condor restart
 }
