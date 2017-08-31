@@ -63,7 +63,7 @@ ss-display "Pegasus is ready"
 deploy_java_ubuntu
 deploy_python_ubuntu
 deploy_condor_ubuntu
-#deploy_pegasus
+deploy_pegasus
 
 # When VM is added, add its address into /etc/hosts
 
