@@ -32,7 +32,7 @@ apt-get install -y python
 
 deploy_condor_ubuntu() {
 cm_hostname=$HOSTNAME
-var="127.0.0.1 localhost localhost.localdomain $cm_hostname"
+var="127.0.0.1 $cm_hostname localhost"
 sed -i "1s/.*/$var/" /etc/hosts
 hostnamectl set-hostname $cm_hostname
 export DEBIAN_FRONTEND=noninteractive

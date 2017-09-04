@@ -36,7 +36,7 @@ ss-display "Received the ready state of the HTCondor Central Manager"
 cm_hostname=`ss-get cm.hostname`
 cm_ip=`ss-get cm.ip`
 local_hostname=$HOSTNAME
-var="127.0.0.1 localhost localhost.localdomain $local_hostname"
+var="127.0.0.1 $local_hostname localhost"
 sed -i "1s/.*/$var/" /etc/hosts
 echo "$cm_ip $cm_hostname" >> /etc/hosts
 hostnamectl set-hostname $local_hostname
