@@ -43,7 +43,7 @@ echo "COLLECTOR_HOST = \$(CONDOR_HOST)" >> /etc/condor/condor_config.local
 echo "ALLOW_WRITE = *" >> /etc/condor/condor_config.local
 echo "DAEMON_LIST = MASTER, COLLECTOR, NEGOTIATOR, SCHEDD" >> /etc/condor/condor_config.local
 echo "QUEUE_SUPER_USERS = root, condor" >> /etc/condor/condor_config.local
-echo "CONDOR_ADMIN = root@\$(FULL_HOSTNAME)" >> /etc/condor/condor_config.local
+echo "CONDOR_IDS = 0.0" >> /etc/condor/condor_config.local
 ss-set cm.hostname $cm_hostname
 eth0_ip=`/sbin/ifconfig eth0 | grep 'inet addr:' | cut -d: -f2 | awk '{ print $1}'`
 ss-set cm.ip $eth0_ip
