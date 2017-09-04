@@ -38,9 +38,9 @@ hostnamectl set-hostname $cm_hostname
 export DEBIAN_FRONTEND=noninteractive
 apt-get update -q
 apt-get install -q -y -o Dpkg::Options::="--force-confdef" -o Dpkg::Options::="--force-confold" htcondor
-mkdir -p /local/condor/home
-chown condor:condor /local/condor -R
-echo "LOCAL_DIR = /local/condor/home" >> /etc/condor/condor_config.local
+#mkdir -p /local/condor/home
+#chown condor:condor /local/condor -R
+#echo "LOCAL_DIR = /local/condor/home" >> /etc/condor/condor_config.local
 echo "CONDOR_HOST = \$(HOSTNAME)" >> /etc/condor/condor_config.local
 echo "COLLECTOR_HOST = \$(CONDOR_HOST)" >> /etc/condor/condor_config.local
 echo "ALLOW_WRITE = *" >> /etc/condor/condor_config.local
