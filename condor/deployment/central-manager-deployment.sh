@@ -38,12 +38,14 @@ hostnamectl set-hostname $cm_hostname
 export DEBIAN_FRONTEND=noninteractive
 apt-get update -q
 apt-get install -q -y -o Dpkg::Options::="--force-confdef" -o Dpkg::Options::="--force-confold" htcondor
+mkdir -p /local/condor/home
+chown condor:condor /local/condor -R
+echo "LOCAL_DIR = /local/condor/home" >> /etc/condor/condor_config.local
 echo "CONDOR_HOST = \$(HOSTNAME)" >> /etc/condor/condor_config.local
 echo "COLLECTOR_HOST = \$(CONDOR_HOST)" >> /etc/condor/condor_config.local
 echo "ALLOW_WRITE = *" >> /etc/condor/condor_config.local
 echo "DAEMON_LIST = MASTER, COLLECTOR, NEGOTIATOR, SCHEDD" >> /etc/condor/condor_config.local
 echo "QUEUE_SUPER_USERS = root, condor" >> /etc/condor/condor_config.local
-echo "CONDOR_IDS = 0.0" >> /etc/condor/condor_config.local
 ss-set cm.hostname $cm_hostname
 eth0_ip=`/sbin/ifconfig eth0 | grep 'inet addr:' | cut -d: -f2 | awk '{ print $1}'`
 ss-set cm.ip $eth0_ip
