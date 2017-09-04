@@ -44,6 +44,13 @@ apt-get install -q -y -o Dpkg::Options::="--force-confdef" -o Dpkg::Options::="-
 echo "CONDOR_HOST = \$(HOSTNAME)" >> /etc/condor/condor_config.local
 echo "COLLECTOR_HOST = \$(CONDOR_HOST)" >> /etc/condor/condor_config.local
 echo "ALLOW_WRITE = *" >> /etc/condor/condor_config.local
+echo "ALLOW_READ = *" >> /etc/condor/condor_config.local
+echo "ALLOW_DAEMON = *" >> /etc/condor/condor_config.local
+echo "ALLOW_NEGOTIATOR = \$(CONDOR_HOST)" >> /etc/condor/condor_config.local
+echo "ALLOW_NEGOTIATOR_SCHEDD = $(CONDOR_HOST)" >> /etc/condor/condor_config.local
+echo "ALLOW_ADMINISTRATOR = $(CONDOR_HOST)" >> /etc/condor/condor_config.local
+echo "ALLOW_OWNER = $(FULL_HOSTNAME), $(ALLOW_ADMINISTRATOR)" >> /etc/condor/condor_config.local
+echo "DAEMON_LIST = MASTER, STARTD" >> /etc/condor/condor_config.local
 echo "DAEMON_LIST = MASTER, COLLECTOR, NEGOTIATOR, SCHEDD" >> /etc/condor/condor_config.local
 echo "QUEUE_SUPER_USERS = root, condor" >> /etc/condor/condor_config.local
 printf "SEC_DEFAULT_AUTHENTICATION = NEVER\nSEC_DEFAULT_NEGOTIATION = NEVER\n" >> /etc/condor/condor_config.local
