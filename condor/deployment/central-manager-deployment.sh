@@ -70,14 +70,14 @@ apt-get install pegasus -y
 export PYTHONPATH=`pegasus-config --python`
 export PERL5LIB=`pegasus-config --perl`
 export CLASSPATH=`pegasus-config --classpath`
-ss-display "Pegasus is ready"
+#ss-display "Pegasus is ready"
 }
 
 #apt-get install software-properties-common
 deploy_java_ubuntu
 deploy_python_ubuntu
 deploy_condor_ubuntu
-#deploy_pegasus
+deploy_pegasus
 
 # When VM is added, add its address into /etc/hosts
 
