@@ -36,10 +36,12 @@ var="127.0.0.1 $cm_hostname localhost"
 sed -i "1s/.*/$var/" /etc/hosts
 hostnamectl set-hostname $cm_hostname
 export DEBIAN_FRONTEND=noninteractive
+add-apt-repository 'deb http://research.cs.wisc.edu/htcondor/ubuntu/development/ trusty contrib'
+wget -qO - http://research.cs.wisc.edu/htcondor/ubuntu/HTCondor-Release.gpg.key | sudo apt-key add -
 apt-get update -q
-apt-get install -q -y -o Dpkg::Options::="--force-confdef" -o Dpkg::Options::="--force-confold" htcondor
-#mkdir -p /local/condor/home
-#chown condor:condor /local/condor -R
+apt-get install -q -y -o Dpkg::Options::="--force-confdef" -o Dpkg::Options::="--force-confold" condor
+mkdir -p /local/condor/home
+chown condor:condor /local/condor -R
 #echo "LOCAL_DIR = /local/condor/home" >> /etc/condor/condor_config.local
 echo "CONDOR_HOST = \$(HOSTNAME)" >> /etc/condor/condor_config.local
 echo "COLLECTOR_HOST = \$(CONDOR_HOST)" >> /etc/condor/condor_config.local
@@ -73,10 +75,18 @@ export CLASSPATH=`pegasus-config --classpath`
 #ss-display "Pegasus is ready"
 }
 
+set_locale() {
+export LANGUAGE=en_US.UTF-8
+export LC_ALL=en_US.UTF-8
+export LANG=en_US.UTF-8
+export LC_TYPE=en_US.UTF-8
+}
+
 #apt-get install software-properties-common
 deploy_java_ubuntu
 deploy_python_ubuntu
 deploy_condor_ubuntu
+set_locale
 deploy_pegasus
 
 # When VM is added, add its address into /etc/hosts

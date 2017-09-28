@@ -41,8 +41,10 @@ sed -i "1s/.*/$var/" /etc/hosts
 echo "$cm_ip $cm_hostname" >> /etc/hosts
 hostnamectl set-hostname $local_hostname
 export DEBIAN_FRONTEND=noninteractive
+add-apt-repository 'deb http://research.cs.wisc.edu/htcondor/ubuntu/development/ trusty contrib'
+wget -qO - http://research.cs.wisc.edu/htcondor/ubuntu/HTCondor-Release.gpg.key | sudo apt-key add -
 apt-get update -q
-apt-get install -q -y -o Dpkg::Options::="--force-confdef" -o Dpkg::Options::="--force-confold" htcondor
+apt-get install -q -y -o Dpkg::Options::="--force-confdef" -o Dpkg::Options::="--force-confold" condor
 #mkdir -p /local/condor/home
 #chown condor:condor /local/condor -R
 #echo "LOCAL_DIR = /local/condor/home" >> /etc/condor/condor_config.local
@@ -60,8 +62,16 @@ printf "SEC_DEFAULT_AUTHENTICATION = NEVER\nSEC_DEFAULT_NEGOTIATION = NEVER\n" >
 service condor restart
 }
 
+set_locale() {
+export LANGUAGE=en_US.UTF-8
+export LC_ALL=en_US.UTF-8
+export LANG=en_US.UTF-8
+export LC_TYPE=en_US.UTF-8
+}
+
 deploy_java_ubuntu
 deploy_python_ubuntu
 deploy_condor_ubuntu
+set_locale
 
 exit 0
